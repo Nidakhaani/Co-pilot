@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-canvas: #f4f6f3;
+  --color-card: #ffffff;
+  --color-accent: #0f6e5b;
+  --color-accent-strong: #0b5a4a;
+  --color-accent-soft: #e6f0ec;
+  --color-ink: #1c2b26;
+  --color-muted: #6b7d76;
+  --color-line: #e3e9e5;
+  --color-border: #dde5e0;
+
+  --font-sans: var(--font-geist-sans);
+}
+
+@theme {
+  /* Key Point — teal/green */
+  --color-keypoint: #0f766e;
+  --color-keypoint-soft: #d9f1ee;
+  --color-keypoint-ring: #0f766e33;
+
+  /* Decision — indigo/blue */
+  --color-decision: #4f46e5;
+  --color-decision-soft: #e4e6fd;
+  --color-decision-ring: #4f46e533;
+
+  /* Action Item — amber/orange */
+  --color-action: #d97a06;
+  --color-action-soft: #fdeed7;
+  --color-action-ring: #d97a0633;
+
+  /* Question — violet/purple */
+  --color-question: #9333ea;
+  --color-question-soft: #f1e6fd;
+  --color-question-ring: #9333ea33;
+
+  /* Normal Note — slate/gray */
+  --color-note: #64748b;
+  --color-note-soft: #e7ebf0;
+  --color-note-ring: #64748b33;
+
+  /* Flagged — red */
+  --color-flagged: #dc2626;
+  --color-flagged-soft: #fdecec;
+  --color-flagged-ring: #dc262633;
+
+  /* Confirmed — mint/green (HITL confirm state) */
+  --color-confirmed: #16a34a;
+  --color-confirmed-soft: #dcf5e4;
+}
+
+:root {
+  --background: #f4f6f3;
+  --foreground: #1c2b26;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: #0f6e5b22;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toast-in {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.8); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.animate-float { animation: float 5s ease-in-out infinite; }
+.animate-float-delay { animation: float 5s ease-in-out 1.2s infinite; }
+.animate-float-delay2 { animation: float 5s ease-in-out 2.4s infinite; }
+.animate-fade-in-up { animation: fade-in-up 0.35s ease-out both; }
+.animate-toast-in { animation: toast-in 0.25s ease-out both; }
+.animate-pulse-dot { animation: pulse-dot 1.4s ease-in-out infinite; }
+.animate-blink { animation: blink 1s step-start infinite; }

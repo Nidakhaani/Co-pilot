@@ -1,0 +1,42 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Copilot — keep ONLY source code in the repo. Docs/design noise stays out.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Product docs & design assets (not source)
+COPILOT_PRD.md
+COPILOT_Design_Doc.md
+/Arch/
+/Co-Pilot Figma MVP/
+
+# ───────────────────────────── Node / Next (copilot-app) ─────────────────────
+copilot-app/node_modules/
+copilot-app/.next/
+copilot-app/out/
+copilot-app/next-env.d.ts
+copilot-app/tsconfig.tsbuildinfo
+copilot-app/*.log
+
+# Dev-agent / local notes in copilot-app (not product source)
+copilot-app/README.md
+copilot-app/AGENTS.md
+copilot-app/CLAUDE.md
+
+# ───────────────────────────── Python (server) ───────────────────────────────
+server/.venv/
+server/__pycache__/
+server/*.py[cod]
+server/.pytest_cache/
+server/*.log
+
+# ───────────────────────────── Secrets ───────────────────────────────────────
+# Real env files never get committed. Templates (.env*.example) DO get committed.
+.env
+.env.*
+!.env*.example
+
+# ───────────────────────────── OS / editor / misc ────────────────────────────
+.DS_Store
+Thumbs.db
+*.pem
+.idea/
+.vscode/
