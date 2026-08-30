@@ -219,7 +219,7 @@ export default function SessionPage() {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col">
+    <div className="flex h-screen w-full flex-col overflow-hidden">
       <AppHeader
         center={
           session.status === "active" ? (
@@ -249,9 +249,9 @@ export default function SessionPage() {
         }
       />
 
-      <main className="mx-auto flex w-full max-w-6xl gap-6 px-6 py-6 lg:grid lg:h-[calc(100vh-65px)] lg:grid-cols-2 lg:overflow-hidden">
+      <main className="flex min-h-0 w-full max-w-6xl flex-1 flex-col gap-6 px-6 py-6 lg:mx-auto lg:flex-row">
         {/* Left: Live Conversation */}
-        <Card className="flex min-w-0 flex-col overflow-hidden lg:h-full">
+        <Card className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
           <div className="flex items-center justify-between border-b border-line px-5 py-3.5">
             <h2 className="text-sm font-semibold text-ink">Live Conversation</h2>
             <span className="text-xs text-muted">Raw transcript · streaming</span>
@@ -265,7 +265,7 @@ export default function SessionPage() {
             {transcriptHistory.map((h, i) => (
               <div
                 key={i}
-                className="animate-fade-in-up rounded-[10px] border border-line bg-canvas/60 px-4 py-3"
+                className="animate-fade-in-up shrink-0 rounded-[10px] border border-line bg-canvas/60 px-4 py-3"
               >
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-[15px] font-light leading-relaxed text-ink/75">
@@ -279,7 +279,7 @@ export default function SessionPage() {
             ))}
 
             {(typedRaw !== null || liveLine !== null) && (
-              <div className="animate-fade-in-up inline-block">
+              <div className="animate-fade-in-up inline-block shrink-0">
                 <p className="text-[22px] font-light leading-normal text-ink/75">
                   {typedRaw !== null ? typedRaw : liveLine}
                   <span className="animate-blink text-accent">▌</span>
@@ -367,37 +367,28 @@ export default function SessionPage() {
           </div>
         </Card>
 
-        {/* Right: Your Notes */}
-        <div className="flex min-w-0 flex-col gap-3 lg:h-full">
-          <div className="flex items-center justify-between px-1">
+        {/* Right: Your Notes — same Card + scroll window as left */}
+        <Card className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+          <div className="flex items-center justify-between border-b border-line px-5 py-3.5">
             <h2 className="text-sm font-semibold text-ink">Your Notes</h2>
             <span className="text-xs text-muted">
               {blocks.length} {blocks.length === 1 ? "block" : "blocks"} ·{" "}
-              <span className="font-medium text-accent">
-                edit any if Copilot got it wrong
-              </span>
+              <span className="font-medium text-accent">edit any if Copilot got it wrong</span>
             </span>
           </div>
 
-          <div
-            ref={notesScrollRef}
-            className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1 pb-2"
-          >
+          <div ref={notesScrollRef} className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-6">
             {blocks.length === 0 ? (
-              <Card className="flex flex-1 items-center justify-center p-6 text-center text-sm text-muted">
+              <div className="flex flex-1 items-center justify-center p-6 text-center text-sm text-muted">
                 {isLive ? (
-                  <div>
-                    Notes streamed from the backend will appear here in real
-                    time as the conversation is classified.
-                  </div>
+                  <div>Notes streamed from the backend will appear here in real time as the conversation is classified.</div>
                 ) : (
                   <div>
-                    Notes will appear here automatically as the conversation
-                    streams in — no blocking or confirmation needed. Edit any
-                    note if Copilot gets it wrong.
+                    Notes will appear here automatically as the conversation streams in — no blocking or confirmation
+                    needed. Edit any note if Copilot gets it wrong.
                   </div>
                 )}
-              </Card>
+              </div>
             ) : (
               blocks.map((b) => (
                 <BlockItem
@@ -412,20 +403,22 @@ export default function SessionPage() {
 
             {/* Explicit demo end */}
             {streamDone && blocks.length > 0 && (
-              <div className="animate-fade-in-up mt-2 flex flex-col items-center gap-3 rounded-[12px] border border-accent/30 bg-accent-soft/40 p-6 text-center">
-                <div className="text-sm font-semibold text-accent">
-                  Demo complete — that&apos;s the end of the session.
-                </div>
+              <div className="animate-fade-in-up mt-2 flex shrink-0 flex-col items-center gap-3 rounded-[12px] border border-accent/30 bg-accent-soft/40 p-6 text-center">
+                <div className="text-sm font-semibold text-accent">Demo complete — that&apos;s the end of the session.</div>
                 <p className="max-w-sm text-sm text-muted">
-                  All {blocks.length} notes were captured automatically. Review
-                  the grouped recap, or edit any note above first.
+                  All {blocks.length} notes were captured automatically. Review the grouped recap, or edit any note above
+                  first.
                 </p>
                 <Button onClick={endSession}>End session &amp; review</Button>
               </div>
             )}
-
           </div>
-        </div>
+
+          <div className="flex items-center justify-between border-t border-line px-5 py-3">
+            <span className="text-xs text-muted">{blocks.length} {blocks.length === 1 ? "block" : "blocks"} captured</span>
+            <span className="text-xs text-muted">{streamDone ? "Ready to review" : "Auto-capturing…"}</span>
+          </div>
+        </Card>
       </main>
       <CorrectionPanel
         block={correcting}

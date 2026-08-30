@@ -34,7 +34,7 @@ export function BlockItem({
 
   return (
     <div
-      className={`animate-fade-in-up relative overflow-hidden rounded-[10px] border bg-card transition-colors ${
+      className={`animate-fade-in-up relative shrink-0 overflow-hidden rounded-[10px] border bg-card transition-colors ${
         flagged
           ? "border-flagged/40"
           : corrected
