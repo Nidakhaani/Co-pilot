@@ -21,12 +21,8 @@ copilot-app/README.md
 copilot-app/AGENTS.md
 copilot-app/CLAUDE.md
 
-# ───────────────────────────── Python (server) ───────────────────────────────
-server/.venv/
-server/__pycache__/
-server/*.py[cod]
-server/.pytest_cache/
-server/*.log
+# Python backend — under active development, NOT part of this repo yet
+/server/
 
 # ───────────────────────────── Secrets ───────────────────────────────────────
 # Real env files never get committed. Templates (.env*.example) DO get committed.

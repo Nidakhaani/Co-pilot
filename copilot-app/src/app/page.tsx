@@ -112,11 +112,13 @@ export default function LandingPage() {
         </div>
 
         <div className="relative flex flex-col items-center">
-          <div className="relative flex h-72 w-72 items-center justify-center">
-            <div className="absolute inset-0 rounded-full border border-line bg-accent-soft/40" />
-            <div className="absolute inset-8 rounded-full border border-dashed border-accent/30" />
-            <LogoMark size={44} />
-          </div>
+          <Link href="/" aria-label="Copilot — go to home">
+            <div className="relative flex h-72 w-72 items-center justify-center transition-transform hover:scale-[1.02]">
+              <div className="absolute inset-0 rounded-full border border-line bg-accent-soft/40" />
+              <div className="absolute inset-8 rounded-full border border-dashed border-accent/30" />
+              <LogoMark size={44} />
+            </div>
+          </Link>
           <div className="mt-2 flex flex-wrap justify-center gap-2">
             {NOTE_TYPES.map((t) => (
               <span key={t.type} className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${t.cls}`}>
@@ -124,6 +126,50 @@ export default function LandingPage() {
                 {t.type}
               </span>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Watch the demo */}
+      <section className="border-y border-line bg-white">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 px-6 py-16 md:grid-cols-2">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-action-soft px-3 py-1.5 text-xs font-semibold text-action">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              Watch the demo
+            </span>
+            <h2 className="mt-4 text-2xl font-semibold tracking-tight text-ink">
+              See it work in under a minute
+            </h2>
+            <p className="mt-3 max-w-md text-muted">
+              Watch how a raw conversation turns into clean, structured notes in
+              real time — and how a flagged note gets fixed without stopping the
+              session. The demo walkthrough video is on its way.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/welcome">
+                <Button size="lg">Try the interactive demo</Button>
+              </Link>
+              <Link href="/notes">
+                <Button size="lg" variant="secondary">
+                  View previous notes
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative aspect-video w-full overflow-hidden rounded-[14px] border border-line bg-canvas">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+              <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-line">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" className="ml-0.5 text-action">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+              <span className="text-sm font-semibold text-ink">Demo video coming soon</span>
+              <span className="text-xs text-muted">A short walkthrough is being prepared</span>
+            </div>
           </div>
         </div>
       </section>

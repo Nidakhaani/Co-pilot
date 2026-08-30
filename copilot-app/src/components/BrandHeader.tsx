@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function LogoMark({ size = 30 }: { size?: number }) {
   return (
     <svg
@@ -21,11 +23,13 @@ export function LogoMark({ size = 30 }: { size?: number }) {
 
 export function BrandHeader({
   subtitle = true,
+  href = "/",
 }: {
   subtitle?: boolean;
+  href?: string;
 }) {
   return (
-    <div className="flex items-center gap-3">
+    <Link href={href} className="flex items-center gap-3">
       <LogoMark />
       <div className="leading-tight">
         <div className="text-[15px] font-semibold text-ink">Copilot</div>
@@ -33,6 +37,6 @@ export function BrandHeader({
           <div className="text-xs text-muted">Ambient knowledge companion</div>
         )}
       </div>
-    </div>
+    </Link>
   );
 }

@@ -53,20 +53,27 @@ export default function SessionPage() {
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState("Note updated");
 
-  const notesEndRef = useRef<HTMLDivElement>(null);
-  const transcriptEndRef = useRef<HTMLDivElement>(null);
+  const notesScrollRef = useRef<HTMLDivElement>(null);
+  const transcriptScrollRef = useRef<HTMLDivElement>(null);
 
   const blocks = session?.blocks ?? [];
   const isLive = session?.captureMode === "live";
 
+  // Keep each pane independently scrolled to the latest content without
+  // scrolling the whole page.
+  const scrollToBottom = (ref: React.RefObject<HTMLDivElement | null>) => {
+    const el = ref.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  };
+
   // Keep the newest note in view as the feed grows
   useEffect(() => {
-    notesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    scrollToBottom(notesScrollRef);
   }, [blocks.length]);
 
   // Keep the transcript log anchored at the latest line
   useEffect(() => {
-    transcriptEndRef.current?.scrollIntoView({ block: "end" });
+    scrollToBottom(transcriptScrollRef);
   }, [transcriptHistory.length]);
 
   // Elapsed timer
@@ -212,7 +219,7 @@ export default function SessionPage() {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
+    <div className="flex min-h-screen w-full flex-col">
       <AppHeader
         center={
           session.status === "active" ? (
@@ -242,7 +249,7 @@ export default function SessionPage() {
         }
       />
 
-      <main className="mx-auto flex h-[calc(100vh-65px)] w-full max-w-6xl gap-6 px-6 py-6 lg:grid lg:grid-cols-2">
+      <main className="mx-auto flex w-full max-w-6xl gap-6 px-6 py-6 lg:grid lg:h-[calc(100vh-65px)] lg:grid-cols-2 lg:overflow-hidden">
         {/* Left: Live Conversation */}
         <Card className="flex min-w-0 flex-col overflow-hidden lg:h-full">
           <div className="flex items-center justify-between border-b border-line px-5 py-3.5">
@@ -251,7 +258,10 @@ export default function SessionPage() {
           </div>
 
           {/* Scrollable transcript log */}
-          <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-6">
+          <div
+            ref={transcriptScrollRef}
+            className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-6"
+          >
             {transcriptHistory.map((h, i) => (
               <div
                 key={i}
@@ -324,7 +334,6 @@ export default function SessionPage() {
               </div>
             )}
 
-            <div ref={transcriptEndRef} />
           </div>
 
           <div className="flex items-center justify-between border-t border-line px-5 py-3">
@@ -370,7 +379,10 @@ export default function SessionPage() {
             </span>
           </div>
 
-          <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1 pb-2">
+          <div
+            ref={notesScrollRef}
+            className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1 pb-2"
+          >
             {blocks.length === 0 ? (
               <Card className="flex flex-1 items-center justify-center p-6 text-center text-sm text-muted">
                 {isLive ? (
@@ -412,11 +424,9 @@ export default function SessionPage() {
               </div>
             )}
 
-            <div ref={notesEndRef} />
           </div>
         </div>
       </main>
-
       <CorrectionPanel
         block={correcting}
         onClose={() => setCorrecting(null)}
